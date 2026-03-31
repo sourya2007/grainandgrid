@@ -13,22 +13,16 @@ const PROJECTS = [
     video: "/videos/Intro_animation_video_202603312112.mp4",
   },
   {
-    title: "Onyx",
-    category: "Digital Product",
-    image: "https://picsum.photos/seed/onyx/1200/1600",
-    video: undefined,
-  },
-  {
     title: "Lumina",
     category: "Art Direction",
     image: "https://picsum.photos/seed/lumina/1200/1600",
-    video: undefined,
+    video: "/videos/original-344b5e91491652dac5d1ae459ccb6592.mp4",
   },
   {
     title: "Vortex",
     category: "Motion Design",
     image: "https://picsum.photos/seed/vortex/1200/1600",
-    video: undefined,
+    video: "/videos/original-aa278b83a06a697c8c6be9295735d132.mp4",
   },
 ];
 
@@ -38,6 +32,10 @@ export function WorkGallery() {
 
   useGSAP(() => {
     const sections = gsap.utils.toArray('.project-card');
+    const totalShift = () => {
+      if (!horizontalRef.current) return 0;
+      return Math.max(horizontalRef.current.scrollWidth - window.innerWidth, 0);
+    };
     
     gsap.to(sections, {
       xPercent: -100 * (sections.length - 1),
@@ -47,14 +45,15 @@ export function WorkGallery() {
         pin: true,
         scrub: 1,
         snap: 1 / (sections.length - 1),
-        end: () => "+=" + horizontalRef.current?.offsetWidth,
+        end: () => "+=" + totalShift(),
+        invalidateOnRefresh: true,
       }
     });
   }, { scope: containerRef });
 
   return (
     <section ref={containerRef} id="work" className="bg-bg overflow-hidden">
-      <div ref={horizontalRef} className="flex h-screen w-[400vw]">
+      <div ref={horizontalRef} className="flex h-screen" style={{ width: `${PROJECTS.length * 100}vw` }}>
         {PROJECTS.map((project, i) => (
           <div 
             key={i} 
@@ -69,7 +68,13 @@ export function WorkGallery() {
                   loop
                   muted
                   playsInline
-                  preload="auto"
+                  preload="metadata"
+                  onCanPlay={(event) => {
+                    const video = event.currentTarget;
+                    void video.play().catch(() => {
+                      // Ignore autoplay rejection; muted playback is attempted again when possible.
+                    });
+                  }}
                 />
               ) : (
                 <>

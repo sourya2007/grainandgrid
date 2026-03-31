@@ -13,14 +13,17 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-12">
             <div>
               <span className="text-[10px] uppercase tracking-widest opacity-40 block mb-4">Contact</span>
-              <a href="mailto:hello@graingrid.com" className="text-lg hover:opacity-50 transition-opacity">hello@graingrid.com</a>
+              <a
+                href="mailto:thegrainandgrid@gmail.com"
+                className="text-lg hover:opacity-50 transition-opacity"
+              >
+                Email
+              </a>
             </div>
             <div>
               <span className="text-[10px] uppercase tracking-widest opacity-40 block mb-4">Social</span>
               <div className="flex flex-col gap-2">
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-lg hover:opacity-50 transition-opacity">Instagram</a>
-                <a href="https://www.behance.net" target="_blank" rel="noreferrer" className="text-lg hover:opacity-50 transition-opacity">Behance</a>
-                <a href="https://dribbble.com" target="_blank" rel="noreferrer" className="text-lg hover:opacity-50 transition-opacity">Dribbble</a>
+                <a href="https://www.linkedin.com/company/grainandgrid/" target="_blank" rel="noreferrer" className="text-lg hover:opacity-50 transition-opacity">LinkedIn</a>
               </div>
             </div>
           </div>
