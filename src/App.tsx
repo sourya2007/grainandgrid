@@ -17,10 +17,16 @@ export default function App() {
       <main className="relative bg-bg">
         <Navbar />
         <Hero />
-        <WorkGallery />
+        <section id="work">
+          <WorkGallery />
+        </section>
         <Team />
-        <About />
-        <Footer />
+        <section id="about">
+          <About />
+        </section>
+        <section id="contact">
+          <Footer />
+        </section>
       </main>
     </SmoothScrollProvider>
   );

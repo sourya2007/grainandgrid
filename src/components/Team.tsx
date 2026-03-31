@@ -23,12 +23,12 @@ const TEAM_PROFILES: TeamProfile[] = [
     innerGradient: 'linear-gradient(145deg, hsla(18, 40%, 45%, 0.55) 0%, hsla(250, 60%, 70%, 0.27) 100%)',
   },
   {
-    name: 'Profile 2',
+    name: 'Sourya Paul',
     title: 'COO',
-    handle: 'grid.coo',
+    handle: 'souryapaul2007@gmail.com',
     status: 'Online',
     contactText: 'Contact COO',
-    avatarUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80',
+    avatarUrl: '/assets/team/sourya.jpg',
     behindGlowColor: 'hsla(180, 85%, 65%, 0.45)',
     innerGradient: 'linear-gradient(145deg, hsla(182, 45%, 36%, 0.52) 0%, hsla(224, 60%, 64%, 0.24) 100%)',
   },
@@ -73,10 +73,8 @@ export function Team() {
               enableTilt
               enableMobileTilt
               onContactClick={() => {
-                const email = profile.handle.includes('@') ? profile.handle : `mailto:${profile.name}`;
-                if (profile.handle.includes('@')) {
-                  window.location.href = `mailto:${profile.handle}`;
-                }
+                if (!profile.handle.includes('@')) return;
+                window.location.href = `mailto:${profile.handle}`;
               }}
               behindGlowColor={profile.behindGlowColor}
               iconUrl="/assets/demo/iconpattern.svg"

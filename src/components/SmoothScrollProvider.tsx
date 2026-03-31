@@ -18,6 +18,9 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       infinite: false,
     });
 
+    // Expose Lenis instance globally for navbar scrolling
+    (window as any).lenisInstance = lenis;
+
     const onLenisScroll = () => {
       ScrollTrigger.update();
     };
@@ -35,6 +38,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       lenis.off('scroll', onLenisScroll);
       gsap.ticker.remove(updateOnTicker);
       lenis.destroy();
+      delete (window as any).lenisInstance;
     };
   }, []);
 

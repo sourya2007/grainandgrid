@@ -1,6 +1,18 @@
 import { motion } from 'motion/react';
 
 export function Navbar() {
+  const handleNavClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const lenisInstance = (window as any).lenisInstance;
+      if (lenisInstance) {
+        lenisInstance.scrollTo(element, { offset: -80 });
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <motion.nav 
       initial={{ y: -100, opacity: 0 }}
@@ -15,9 +27,9 @@ export function Navbar() {
       />
       
       <div className="flex gap-12 text-sm uppercase tracking-widest font-medium">
-        <a href="#work" className="hover:opacity-50 transition-opacity">Work</a>
-        <a href="#about" className="hover:opacity-50 transition-opacity">About</a>
-        <a href="#contact" className="hover:opacity-50 transition-opacity">Contact</a>
+        <button onClick={() => handleNavClick('work')} className="hover:opacity-50 transition-opacity bg-none border-none cursor-pointer p-0 font-inherit">Work</button>
+        <button onClick={() => handleNavClick('about')} className="hover:opacity-50 transition-opacity bg-none border-none cursor-pointer p-0 font-inherit">About</button>
+        <button onClick={() => handleNavClick('contact')} className="hover:opacity-50 transition-opacity bg-none border-none cursor-pointer p-0 font-inherit">Contact</button>
       </div>
       
       <div className="text-sm font-medium">

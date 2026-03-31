@@ -1,68 +1,84 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { LiquidGlass } from './LiquidGlass';
+import TextPressure from './TextPressure';
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
+  const textContainerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 2 } });
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.2 } });
 
-    tl.from(titleRef.current, {
-      y: 200,
-      skewY: 10,
+    tl.from(logoRef.current, {
       opacity: 0,
-      delay: 0.5,
-    })
-    .from(logoRef.current, {
-      scale: 0.8,
+      x: -50,
+      delay: 0.2,
+    }, 0)
+    .from(textContainerRef.current, {
       opacity: 0,
-      rotate: -5,
-    }, "-=1.5");
-
-    gsap.to(containerRef.current, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-      y: 200,
-      opacity: 0.5,
-    });
+      x: 50,
+      delay: 0.3,
+    }, 0.1);
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-      <LiquidGlass />
-      
-      <div className="relative z-10 text-center px-4">
-        <div className="mb-12 overflow-hidden">
-          <img 
-            ref={logoRef}
-            src="https://ais-dev-dihn5inn7jkchlh2cnh6ju-7708100814.asia-southeast1.run.app/logo.png" 
-            alt="Grain & Grid Logo" 
-            className="w-64 md:w-96 mx-auto drop-shadow-2xl"
+    <section ref={containerRef} className="relative h-screen w-full flex items-center justify-between px-8 md:px-16 overflow-hidden bg-black gap-8 md:gap-12">
+      <div className="basis-[58%] flex items-center justify-start">
+        <img
+          ref={logoRef}
+          src="/logo.png"
+          alt="Company Logo"
+          className="h-[62vh] md:h-[86vh] w-full max-w-[980px] object-contain object-left"
+        />
+      </div>
+      <div
+        ref={textContainerRef}
+        className="basis-[42%] min-w-[320px] max-w-[720px] flex flex-col gap-4"
+      >
+        <div style={{ position: 'relative', height: 'clamp(110px, 14vh, 160px)', overflow: 'hidden' }}>
+          <TextPressure
+            text="DESIGN"
+            flex
+            alpha
+            stroke={false}
+            width
+            weight
+            italic
+            textColor="#ffffff"
+            strokeColor="#5227FF"
+            minFontSize={36}
           />
         </div>
-        
-        <div className="overflow-hidden">
-          <h1 ref={titleRef} className="text-6xl md:text-[12vw] leading-[0.9] tracking-tighter uppercase font-serif italic">
-            Design <br /> <span className="not-italic font-sans font-black">Excellence</span>
-          </h1>
+        <div style={{ position: 'relative', height: 'clamp(110px, 14vh, 160px)', overflow: 'hidden' }}>
+          <TextPressure
+            text="DEVELOP"
+            flex
+            alpha
+            stroke={false}
+            width
+            weight
+            italic
+            textColor="#ffffff"
+            strokeColor="#5227FF"
+            minFontSize={36}
+          />
         </div>
-        
-        <p className="mt-8 text-sm md:text-base uppercase tracking-[0.3em] font-medium opacity-60">
-          Crafting Digital Experiences with Precision
-        </p>
-      </div>
-      
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-40">
-        <span className="text-[10px] uppercase tracking-widest">Scroll to Explore</span>
-        <div className="w-[1px] h-12 bg-fg/50" />
+        <div style={{ position: 'relative', height: 'clamp(110px, 14vh, 160px)', overflow: 'hidden' }}>
+          <TextPressure
+            text="DETAIL"
+            flex
+            alpha
+            stroke={false}
+            width
+            weight
+            italic
+            textColor="#ffffff"
+            strokeColor="#5227FF"
+            minFontSize={36}
+          />
+        </div>
       </div>
     </section>
   );
