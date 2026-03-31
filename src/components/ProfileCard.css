@@ -1,0 +1,332 @@
+.pc-card-wrapper {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --background-x: 50%;
+  --background-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+  --icon: none;
+  --grain: none;
+  --inner-gradient: linear-gradient(145deg, #60496e8c 0%, #71C4FF44 100%);
+  --behind-glow-color: rgba(125, 190, 255, 0.67);
+  --behind-glow-size: 50%;
+
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.pc-card-wrapper.className {
+  /* Additional class overrides can go here */
+}
+
+/* Background glow effect */
+.pc-behind {
+  position: absolute;
+  inset: -20px;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at var(--pointer-x) var(--pointer-y),
+    var(--behind-glow-color),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+.pc-card-shell.active ~ .pc-behind,
+.pc-card-shell:has(.active) ~ .pc-behind {
+  opacity: 1;
+}
+
+/* Card shell container */
+.pc-card-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.35;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+
+  /* 3D perspective for tilt */
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.pc-card-shell.active {
+  z-index: 10;
+}
+
+/* Card element */
+.pc-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(1.02);
+  transition: transform 120ms ease-out;
+}
+
+.pc-card-shell:not(.entering) .pc-card {
+  transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(1.02);
+}
+
+.pc-card-shell.entering .pc-card {
+  transition: none;
+}
+
+/* Inside container for layering */
+.pc-inside {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Shine effect (light reflection) */
+.pc-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(
+    circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.4),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pc-card-shell.active .pc-shine {
+  opacity: 1;
+}
+
+/* Glare effect (additional gloss) */
+.pc-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Content wrapper */
+.pc-content {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  z-index: 3;
+}
+
+.pc-avatar-content {
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.pc-user-info {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 300ms ease-out;
+  pointer-events: none;
+}
+
+.pc-card-shell.active .pc-user-info {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.pc-user-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-mini-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.pc-mini-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pc-handle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.pc-status {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pc-contact-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 200ms ease-out;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.pc-contact-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.pc-contact-btn:active {
+  transform: scale(0.98);
+}
+
+/* Details section */
+.pc-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 300ms ease-out;
+}
+
+.pc-card-shell.active .pc-details {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pc-details h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pc-details p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Inner gradient overlay */
+.pc-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--inner-gradient);
+  border-radius: 20px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Icon pattern background */
+.pc-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    var(--icon),
+    var(--grain);
+  background-size: cover, 8px 8px;
+  background-position: center, var(--background-x) var(--background-y);
+  border-radius: 20px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.3;
+  animation: bgShift 20s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+  0%, 100% {
+    background-position: center, var(--background-x) var(--background-y);
+  }
+  50% {
+    background-position: center, calc(var(--background-x) + 5%) calc(var(--background-y) + 5%);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .pc-card-wrapper {
+    max-width: 100%;
+  }
+
+  .pc-content {
+    padding: 16px;
+  }
+
+  .pc-user-info {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .pc-details h3 {
+    font-size: 22px;
+  }
+
+  .pc-details p {
+    font-size: 12px;
+  }
+}

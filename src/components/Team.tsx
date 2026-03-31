@@ -13,12 +13,12 @@ type TeamProfile = {
 
 const TEAM_PROFILES: TeamProfile[] = [
   {
-    name: 'Profile 1',
+    name: 'Eshaan Sarkar',
     title: 'CEO',
-    handle: 'grain.ceo',
+    handle: 'sarkareshaan@gmail.com',
     status: 'Online',
     contactText: 'Contact CEO',
-    avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80',
+    avatarUrl: '/assets/team/eshaan.jpg',
     behindGlowColor: 'hsla(18, 100%, 70%, 0.55)',
     innerGradient: 'linear-gradient(145deg, hsla(18, 40%, 45%, 0.55) 0%, hsla(250, 60%, 70%, 0.27) 100%)',
   },
@@ -72,11 +72,18 @@ export function Team() {
               showUserInfo
               enableTilt
               enableMobileTilt
-              onContactClick={() => console.log(`${profile.title} contact clicked`)}
+              onContactClick={() => {
+                const email = profile.handle.includes('@') ? profile.handle : `mailto:${profile.name}`;
+                if (profile.handle.includes('@')) {
+                  window.location.href = `mailto:${profile.handle}`;
+                }
+              }}
               behindGlowColor={profile.behindGlowColor}
               iconUrl="/assets/demo/iconpattern.svg"
               behindGlowEnabled
               innerGradient={profile.innerGradient}
+              behindGlowSize="50%"
+              miniAvatarUrl={profile.avatarUrl}
             />
           ))}
         </div>
